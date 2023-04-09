@@ -1,0 +1,49 @@
+             <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ext-language_tools.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ext-beautify.js"></script>
+<div id="code-edit" >//Written on admin.ntcode.ml</div>
+
+  <script>
+    var editor = ace.edit("code-edit");
+    editor.setTheme("ace/theme/monokai");
+    editor.session.setMode("ace/mode/java");
+    editor.setOptions({
+      enableBasicAutocompletion: true,
+      enableSnippets: true,
+      enableLiveAutocompletion: true,
+      fontSize: "14pt"
+    });
+    editor.getSession().on('change', function() {
+  update()
+});
+
+function update() //writes in <div> with id=output
+{
+  var val = editor.getSession().getValue();
+  $('#javacode').html(val);
+}
+
+
+    var langTools = ace.require("ace/ext/language_tools");
+    langTools.addCompleter({
+      getCompletions: function(editor, session, pos, prefix, callback) {
+        var completions = [];
+        if (prefix.length === 0) {
+          completions = [
+            { value: "System.out.println", caption: "System.out.println", meta: "Java function" },
+            { value: "Math.sqrt", caption: "Math.sqrt", meta: "Java function" }
+          ];
+        } else if (prefix === "MathUtils.") {
+          completions = [
+            { value: "square", caption: "square", meta: "Java method" }
+          ];
+        }
+        callback(null, completions);
+      }
+    });
+  </script>
+  <style type="text/css">
+    .code-edit{
+      padding: ;
+    }
+  </style>

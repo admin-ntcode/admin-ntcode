@@ -1,0 +1,267 @@
+<html>
+
+  <head>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/default.min.css" rel="stylesheet" />
+
+<style>
+
+td.hljs-ln-code {
+
+			padding-left: 5px;
+
+		}
+</style>
+      <script>
+function hAll(name)
+{
+
+      $('code.'+name).each(function(i, block) {
+        hljs.highlightElement(block);
+    });
+      $('code.hljs').each(function(i, block) {
+        hljs.lineNumbersBlock(block);
+    });
+}
+
+      </script>
+
+    <title>
+
+      list of Codes Appended So far
+
+    </title>
+
+  </head>
+
+  <body>
+
+    {% include 'navbar.html'%}
+
+    <div class="container">
+
+      <h3>List of Entries</h3>
+
+      {% for entry in entries %}
+
+      {{y}}
+
+        <ul class="collapsible popout ">
+
+          <li>
+
+            <div class="collapsible-header" id="{{ entry.name }}" onclick="addDesAndCode('{{ entry.name }}')">
+
+              {{ entry.name }}
+
+              
+
+            </div>
+
+            
+
+            <div class="collapsible-body {{ entry.name }}">
+
+<p class="sdes"></p>
+
+              
+
+            
+
+              <p class="description"><b>Description:</b><br></p>
+
+              <div class="container col s12 m6">
+
+      
+
+</div>
+
+<pre>
+
+  <code class="language-java {{ entry.name }}">
+
+
+
+  </code>
+
+</pre>
+
+
+   <p> Author:{{entry.author}}</p>
+
+   <i class="copy material-icons tooltipped" style="cursor: pointer;"  data-position="bottom" data-tooltip="Copy"  data-clipboard-target=".{{entry.name.split(' ')[0]}}" >content_copy</i>
+
+   <i class="material-icons tooltipped2" data-position="bottom" data-tooltip="Download" onclick="location.href='/download/code/{{entry.name}}'" style="cursor: pointer;">download</i>
+
+              
+
+   {% if "username" in session %}
+
+    {% if session["username"] == entry.author %}
+
+    <i class="material-icons tooltipped2" data-position="bottom" data-tooltip="Delete" onclick="deleteEntry('{{ entry.name }}')" style="cursor: pointer;color: red;">delete_forever</i>
+
+    <i class="material-icons tooltipped2" data-position="bottom" data-tooltip="Edit" onclick="location.href='/form/{{entry.name}}'" style="cursor: pointer;">edit</i>
+
+
+    {% endif %}
+
+  {% endif %}
+
+            </div>
+
+          </li>
+
+        </ul>
+
+      {% endfor %}
+
+    </div>
+
+   <script src="{{url_for('static',filename='cbd.js')}}"></script>
+
+    <script>
+
+// update on 08-04-23 Added SDES (Single Description )
+function addDesAndCode(name)
+{
+        $.get("/get/code/" + name, function (data, status) {
+            console.log("Updated")
+            $("code." + name).html(data);
+            hAll(name);
+        });
+
+$.get("/get/description/"+name, function(data, status){
+    $("div."+name+">p.description").html(data);
+  });
+
+$.get("/get/sdes/"+name, function(data, status){
+    $("div."+name+">p.sdes").html(data);
+  });
+
+
+$('#'+name).removeAttr("onclick");
+}
+
+
+
+
+      $(document).ready(function(){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    $('.collapsible').collapsible();
+
+
+
+
+
+    
+
+
+
+ var clipboard=  new Clipboard('.copy');
+
+ clipboard.on('success', function(e) {
+
+  var toastHTML = '<span>Copied Successfully</span>';
+
+  M.toast({html: toastHTML,classes:"rounded"});
+
+    e.clearSelection();
+
+});
+
+
+clipboard.on('error', function(e) {
+
+    console.error('Action:', e.action);
+
+    console.error('Trigger:', e.trigger);
+
+     swal({
+
+  title: "Cannot copy!",
+
+  text: "Code copy Failed",
+
+  icon: "error",
+
+});
+
+});
+
+$('.tooltipped').tooltip();
+
+$('.tooltipped2').tooltip();
+
+
+  });
+
+  
+
+  function deleteEntry(nameOfEntry)
+
+  {
+
+    swal({
+
+  title: "Are you sure?",
+
+  text: "This entry will be deleted",
+
+  icon: "warning",
+
+  buttons: true,
+
+  dangerMode: true,
+
+})
+
+.then((willDelete) => {
+
+  if (willDelete) {
+
+    location.href="/delete/"+nameOfEntry;
+
+  } else {
+
+    swal("Cancelled! Deleting");
+
+  }
+
+});
+
+  }
+
+
+    </script>
+    <style>
+      .collapsible-body
+      {
+        background-color: white;
+      }
+</style>
+
+  </body>
+
+</html>

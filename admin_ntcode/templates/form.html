@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <title>Upload Java Codes</title>
+
+  <!-- Materialize CSS CDN -->
+
+</head>
+
+<body>
+
+  {% include 'navbar.html'%}
+  <style type="text/css">
+      /* label focus color */
+ .input-field input:focus + label {
+   color: white !important;
+ }
+ 
+  .input-field input[type=text]:focus{
+     border-bottom: 1px solid white !important;
+     box-shadow: 0 1px 0 0 white !important;
+    }
+    .input-field input[type=text]:focus{
+     border-bottom: 1px solid white !important;
+     box-shadow: 0 1px 0 0 white !important;
+    }
+
+    .input-field input[type=text]{
+     color:white;
+    }
+    </style>
+
+  <div class="container form-container">
+
+    <form action="/form" method="POST">
+
+      <div class="input-field">
+
+        <input type="text" id="name" name="name" required autocomplete="off">
+
+        <label for="name" class="">Name</label>
+
+      </div>
+      <div class="input-field">
+
+        <input type="text" id="single" name="single" required autocomplete="off">
+
+        <label for="single" class="">Single Line description</label>
+
+      </div>
+
+<p class="center-align"><b >Enter The Description</b></p><div  id="editor-md">{% include 'md.html' %}</div>
+
+<p class="center-align"><b>Enter The Code</b></p> {% include 'java-edit.html' %}</div>
+<textarea id="javacode" name="javacode" style="display:none;"></textarea>
+
+      <p class="center-align">
+        <button class="btn waves-effect waves-light blue lighten-2" type="submit">Submit
+
+        <i class="material-icons right">send</i>
+
+      </button>
+      </p>
+
+    </form>
+
+  </div>
+
+
+  <style>
+ #code-edit {
+    
+    margin: auto;
+      width: 100%;
+      padding-top: 20%;
+            padding-bottom: 20%;
+    
+    
+        }
+    
+    @media only screen and (min-width: 600px)
+{
+   
+        .form-container
+        {
+          background-color: dimgrey;
+          padding: 1%;
+          border-radius: 10px;
+          margin-top:2%;
+          margin-bottom: 2%;
+        }
+        .form-container>form>p
+        {
+          color: white;
+          padding-bottom: 1 % ;
+          padding-top: 1%;
+        }
+    
+   }
+        
+  </style>
+  <script>
+    //$('input').css('color','white');
+    //$('label.active').css('color','white');
+  </script>
+</body>
+
+</html>

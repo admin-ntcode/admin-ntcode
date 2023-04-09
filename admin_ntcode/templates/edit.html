@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <title>Edit {{name}}</title>
+
+  <!-- Materialize CSS CDN -->
+
+</head>
+
+<body>
+
+  {% include 'navbar.html'%}
+
+  <div class="container">
+
+    <form action="/form/{{name}}" method="POST">
+<div class="input-field">
+
+        <input type="text" id="single" name="single" required autocomplete="off" value="{{sdes}}">
+
+        <label for="single" class="">Single Line description</label>
+
+      </div>
+<b>Enter The Description</b><div  id="editor-md">
+  
+  <link rel="stylesheet" href="/static/editormd/css/editormd.css" />
+  <div>
+      <div id="test-editor" style="height:50%;">
+      <textarea style="display:none;" name="">### Editor.md
+  **Editor.md**: The open source embeddable online markdown editor, based on CodeMirror & jQuery & Marked.
+      </textarea>
+  </div>
+  </div>
+  <script src="/static/editormd/editormd.min.js"></script>
+  <script type="text/javascript">
+      {% include 'en.js.html' %}
+      $(function() {
+          var editor = editormd("editor-md", {
+               width  : "",
+               height : "",
+              name:"description",
+              placeholder:"A good Documentation",
+              path   : "/static/editormd/lib/",
+              value:convertSanitizedStringToHtml(`{{des.replace('`','\`')}}`)
+          });
+  
+      });
+
+      function convertSanitizedStringToHtml(sanitizedString) {
+  const tempElement = document.createElement("div");
+  tempElement.innerHTML = sanitizedString;
+  return tempElement.innerHTML;
+}
+
+  </script>
+  
+</div>
+
+<b>Enter The Code</b><div class="java-edit">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ext-language_tools.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ext-beautify.js"></script>
+<div id="code-edit" >{{code}}</div>
+
+  <script>
+    var editor = ace.edit("code-edit");
+    editor.setTheme("ace/theme/monokai");
+    editor.session.setMode("ace/mode/java");
+    editor.setOptions({
+      enableBasicAutocompletion: true,
+      enableSnippets: true,
+      enableLiveAutocompletion: true,
+      fontSize: "14pt"
+    });
+    editor.getSession().on('change', function() {
+  update()
+});
+
+function update() //writes in <div> with id=output
+{
+  var val = editor.getSession().getValue();
+  $('#javacode').html(val);
+}
+
+
+    var langTools = ace.require("ace/ext/language_tools");
+    langTools.addCompleter({
+      getCompletions: function(editor, session, pos, prefix, callback) {
+        var completions = [];
+        if (prefix.length === 0) {
+          completions = [
+            { value: "System.out.println", caption: "System.out.println", meta: "Java function" },
+            { value: "Math.sqrt", caption: "Math.sqrt", meta: "Java function" }
+          ];
+        } else if (prefix === "MathUtils.") {
+          completions = [
+            { value: "square", caption: "square", meta: "Java method" }
+          ];
+        }
+        callback(null, completions);
+      }
+    });
+  </script>
+
+</div>
+<textarea id="javacode" name="javacode" style="display:none;">{{code}}</textarea>
+
+      <button class="btn waves-effect waves-light" type="submit">Save
+
+        <i class="material-icons right">save</i>
+
+      </button>
+
+    </form>
+
+  </div>
+
+
+  <style>
+    #code-edit {
+
+margin: auto;
+  width: 100%;
+  padding-top: 20%;
+        padding-bottom: 20%;
+
+
+    }
+  </style>
+  
+</body>
+
+</html>

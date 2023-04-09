@@ -1,0 +1,23 @@
+
+        <link rel="stylesheet" href="/static/editormd/css/editormd.css" />
+<div>
+    <div id="test-editor" style="height:50%;">
+    <textarea style="display:none;" name="">### Editor.md
+**Editor.md**: The open source embeddable online markdown editor, based on CodeMirror & jQuery & Marked.
+    </textarea>
+</div>
+</div>
+<script src="/static/editormd/editormd.min.js"></script>
+<script type="text/javascript">
+    {% include 'en.js.html' %}
+    $(function() {
+        var editor = editormd("editor-md", {
+             width  : "",
+             height : "",
+            name:"description",
+            placeholder:"A good Documentation",
+            path   : "/static/editormd/lib/"
+        });
+
+    });
+</script>

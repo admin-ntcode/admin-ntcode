@@ -1,0 +1,143 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Compiled and minified CSS -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    
+
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<nav>
+
+    <div class="nav-wrapper">
+
+        <a href="{{url_for('index')}}" class="brand-logo">Neon Tech</a>
+
+        <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
+     
+
+ <ul id="nav-mobile" class="right hide-on-med-and-down">
+
+ <li {% if request.path == url_for('index') %}class="active"{% endif %}><a href="{{url_for('index')}}">Home</a></li>
+
+           
+
+    {% if session.username %}
+
+   <li {% if request.path == url_for('form') %}class="active"{% endif %}><a href="{{url_for('form')}}">Upload Code</a></li>
+
+   
+
+ <li {% if request.path == url_for('list') %}class="active"{% endif %}><a href="{{url_for('list')}}">List</a></li>
+
+ 
+
+  <li {% if request.path==url_for('profile') %} class ="active" {% endif %}>         <a href="{{ url_for('profile')}}" >{{session['username']}}</a></li>
+
+            
+
+   {% else %}
+
+  <li {% if request.path == url_for('login') %}class="active"{% endif %}><a href="{{url_for('login')}}">Login</a></li>
+
+  
+
+   <!--
+
+    <li {% if request.path == url_for('register') %}class="active"{% endif %}><a href="{{url_for('register')}}">Signup</a></li>
+
+   -->
+
+            {% endif %}
+
+  </ul>
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+  
+
+        
+
+        
+
+   
+
+   
+
+   
+
+    </div>
+
+</nav>
+
+      
+
+<ul class="sidenav" id="slide-out">
+
+   
+
+            <li {% if request.path == url_for('index') %}class="active"{% endif %}><a href="{{url_for('index')}}">Home</a></li>
+
+
+            
+
+            {% if session.username %}
+
+            <li {% if request.path == url_for('form') %}class="active"{% endif %}><a href="{{url_for('form')}}">Upload Code</a></li>
+
+ <li {% if request.path == url_for('list') %}class="active"{% endif %}><a href="{{url_for('list')}}">List</a></li>
+
+  <li {% if request.path==url_for('profile') %} class ="active" {% endif %}>         <a href="{{ url_for('profile')}}" >{{session['username']}}</a></li>
+
+            
+
+            {% else %}
+
+            <li {% if request.path == url_for('login') %}class="active"{% endif %}><a href="{{url_for('login')}}">Login</a></li>
+
+            {% endif %}
+
+        </ul>
+
+    
+
+<script>
+
+  $(document).ready(function(){
+
+    $('.sidenav').sidenav();
+
+  });
+
+
+        
+
+</script>
+<style>
+  body{
+    b
+    background-image: url("https://i.imgur.com/CwSamSs.jpeg");
+  }
+  .sidenav
+  {
+    border-top-left-radius: 10px;
+  }
+</style>

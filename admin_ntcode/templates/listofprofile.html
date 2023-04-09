@@ -1,0 +1,67 @@
+<!-- Navbar -->
+
+{% include 'navbar.html' %}
+
+
+<div class="container">
+
+  <h3>Profiles</h3>
+
+
+  <!-- Collapsible for each user -->
+
+  {% for user in users %}
+
+  <ul class="collapsible popout">
+
+    <li>
+
+      <div class="collapsible-header">
+
+        <i class="material-icons">account_circle</i>
+
+        {{ user.name }}
+
+      </div>
+
+      <div class="collapsible-body">
+
+        <p>{{ user.bio }}</p>
+
+        <p>Codes:</p>
+
+        <ul>
+
+          {% for code in user.codes %}
+
+          <li><a href="{{ url_for('code', usercode=code.usercode) }}">{{ code.name }}</a></li>
+
+          {% endfor %}
+
+        </ul>
+
+      </div>
+
+    </li>
+
+  </ul>
+
+  {% endfor %}
+
+
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', function() {
+
+    var elems = document.querySelectorAll('.collapsible');
+
+    var instances = M.Collapsible.init(elems);
+
+  });
+
+</script>
